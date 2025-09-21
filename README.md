@@ -30,7 +30,7 @@ The `GraphGRUMortalityModel` combines several key components:
 
 ## Dataset
 
-The model is trained on MIMIC-IV data with the following preprocessing:
+The model is trained on MIMIC-III data with the following preprocessing:
 
 - **Patient Selection**: First admissions, age 18-89, minimum 24h stay
 - **Temporal Resolution**: 4-hour prediction windows
@@ -69,7 +69,7 @@ Before running the code, set up your Python environment:
      pip install -r requirements.txt
      ```
 
-Make sure you have access to the MIMIC-III/IV data and have set up any required environment variables or database connections as described in the project documentation.
+Make sure you have access to the MIMIC-III data and have set up any required environment variables or database connections as described in the project documentation.
 
 
 For training and evaluating the model, use the `Project_Evaluation.ipynb` notebook:
