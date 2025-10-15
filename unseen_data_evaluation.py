@@ -103,7 +103,7 @@ def download_data():
         output_path = f'{td}/data.pkl'
         gdown.download(download_url, output_path, quiet=False)
         # Download trained model
-        download_url = f'https://drive.google.com/uc?id=1zZ0pAJ9ASexmNS43WVKuHiQQTyVNnVe0'
+        download_url = f'https://drive.google.com/uc?id=1mmU_INw8SKY8NTdL0Pb2Wr_xnG62XOd1'
         output_path = f'{td}/graph_gru_mortality_model.pt'
         gdown.download(download_url, output_path, quiet=False)
 
@@ -297,8 +297,8 @@ def inferance_query(subject_ids, con):
     dataloader = DataLoader(dataset, batch_size=128, shuffle=False)
 
     # Perform inference
-    res = model.validate(dataloader, dataset, return_predictions=True, labels_exist=False)
-    return res
+    res = model.validate(dataloader, dataset, return_predictions=True, labels_exist=False,calibrate=False)
+    return res, merged.subject_id.drop_duplicates().to_list()
 
 
 def run_pipeline_on_unseen_data(subject_ids ,con):
@@ -319,10 +319,10 @@ def run_pipeline_on_unseen_data(subject_ids ,con):
   :rtype: pandas.DataFrame
   """
   try:
-      predictions = inferance_query(subject_ids, con)
+      predictions, ids = inferance_query(subject_ids, con)
       
       results_df = pd.DataFrame({
-          'subject_id': subject_ids[:len(predictions[0])],  
+          'subject_id': ids,  
           'mortality_proba': predictions[0],
           'prolonged_LOS_proba': predictions[1],  
           'readmission_proba': predictions[2]  
